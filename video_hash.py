@@ -16,21 +16,20 @@ os.chdir('videos')
 # This would print all the files and directories
 for file in dirs:
     vid =  VideoHash(file, frame_interval=5)
-    if vid.hash in lookup_table:
+    if vid.hash_hex in lookup_table:
         print('Collision')
-        print('New: ', file, 'Old: ', lookup_table[vid.hash], 'hash: ', vid.hash)
+        print('New: ', file, 'Old: ', lookup_table[vid.hash_hex], 'hash: ', vid.hash_hex)
         print('________________________________________')
         pass
     else:
-        lookup_table[vid.hash] = file
-        print('Name:',file,'  Hash -->', vid.hash)
+        lookup_table[vid.hash_hex] = file
+        print('Name:',file,'  Hash -->', vid.hash_hex)
 
 
-def test2Vid(vid1, vid2):
-    os.chdir('videos')
+def test2Vid(vid1, vid2, fi=5):
     print('Running Test')
-    hash1 = VideoHash(vid1, frame_interval=5).hash
-    hash2 = VideoHash(vid2, frame_interval=5).hash
+    hash1 = VideoHash(vid1, frame_interval=fi).hash_hex
+    hash2 = VideoHash(vid2, frame_interval=fi).hash_hex
     if hash1 == hash2:
         print('Failed')
     else:
