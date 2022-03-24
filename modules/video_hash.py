@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from ast import For
 import os, sys
 
 # Open a file
