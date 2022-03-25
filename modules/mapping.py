@@ -31,7 +31,5 @@ def generate_map(path):
     return fileMap
 
 
-pprint(generate_map('C:/Users/murad/Desktop/videoHash/data'))
-
 
 

@@ -32,16 +32,16 @@ def generate_config_file():
     finalConf.append(inp)
     clearConsole()
 
-    print("Input which mode you prefer to use ( two modes 'episodes_same_folder' or 'photos_oredered_by_month':")
+    print("Input which mode you prefer to use ( two modes 'episodes_by_year' or 'photos_oredered_by_month':\n\n\ta)episodes_by_year\n\n\tb)photos_oredered_by_month")
     inp = input()
-    finalConf.append(inp)
+    finalConf.append('episodes_by_year' if inp == 'a' else 'photos_oredered_by_month')
     clearConsole()
 
     file = open('config.txt', 'w')
     file.write(f'''origin_path={finalConf[0]}
 destination_path={finalConf[1]}
 collision_path={finalConf[2]}
-# Mode either 'episodes_same_folder' or 'photos_oredered_by_month'
+# Mode either 'episodes_by_year' or 'photos_oredered_by_month'
 mode={finalConf[3]}''')
     file.close()
 

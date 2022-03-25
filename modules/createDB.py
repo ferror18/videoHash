@@ -1,4 +1,3 @@
-from cgitb import lookup
 import sqlite3
 import os
 
@@ -33,10 +32,6 @@ if not db_exists:
     con.commit()
     print('TABLE SCHEMA ==> videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)')
     con.close()
-
-
-
-
-
 else:
     print('Db already exists')
+    pass
