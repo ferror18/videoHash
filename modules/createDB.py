@@ -3,8 +3,7 @@ import sqlite3
 import os
 
 # Open a file
-path = "C:/Users/murad/Desktop/videoHash"
-dirs = os.listdir( path )
+dirs = os.listdir()
 db_exists = False
 
 for file in dirs:
@@ -16,12 +15,23 @@ for file in dirs:
 
 if not db_exists:
     print('New database was created with the name vh.db')
-    open('vh.db','x')        
+    x = open('vh.db','x')
+    x.close()
+
     con = sqlite3.connect('vh.db')
     cur = con.cursor()
-    cur.execute('''CREATE TABLE Videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)''')
+    cur.execute('PRAGMA foreign_keys = ON;')
+    cur.execute('''CREATE TABLE hashes(
+        hash PRIMARY KEY
+    );''')
+    cur.execute('''CREATE TABLE media( 
+        uuid PRIMARY KEY, 
+        hash UNIQUE, 
+        path UNIQUE,
+        FOREIGN KEY (hash) REFERENCES hashes (hash)
+        );''')
     con.commit()
-    print('TABLE SCHEMA ==> Videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)')
+    print('TABLE SCHEMA ==> videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)')
     con.close()
 
 
