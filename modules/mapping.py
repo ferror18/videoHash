@@ -9,8 +9,15 @@ def generate_map(path):
     fileMap = {}
     fileExts = {}
     dir = os.listdir(path)
+    ignore = {
+        'Thumbs.db':1
+    }
 
     for item in dir:
+        if item in ignore:
+            print(f'item ignored: {item}')
+            continue
+
         item = os.path.abspath(item)
         # print(item, os.path.isdir(item)) debug print
         if os.path.isdir(item):
@@ -26,7 +33,7 @@ def generate_map(path):
             #Generate map
             id = str(uuid4())
             if id not in fileMap:
-                fileMap[id] = {'path':item, 'ext':extension}
+                fileMap[id] = {'id':id,'path':item, 'ext':extension}
     os.chdir(original_wd)
     return fileMap
 
