@@ -26,7 +26,7 @@ def generate_map(path):
             #Generate map
             id = str(uuid4())
             if id not in fileMap:
-                fileMap[id] = item
+                fileMap[id] = {'path':item, 'ext':extension}
     os.chdir(original_wd)
     return fileMap
 
