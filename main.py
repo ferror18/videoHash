@@ -21,6 +21,8 @@ while True:
     elif inp == "b":
         generate_config_file()
     elif inp == "a":
+        # runTests()
         pass
+
     else:
         continue
