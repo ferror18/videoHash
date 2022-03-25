@@ -1,5 +1,0 @@
-origin_path=v
-destination_path=v
-collision_path=v
-# Mode either 'episodes_same_folder' or 'photos_oredered_by_month'
-mode=v
