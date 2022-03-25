@@ -1,0 +1,6 @@
+
+origin_path='b'
+destination_path='b'
+collision_path='b'
+# Mode either 'episodes_same_folder' or 'photos_oredered_by_month'
+mode='b' 
