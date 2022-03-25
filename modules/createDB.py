@@ -3,8 +3,7 @@ import sqlite3
 import os
 
 # Open a file
-path = "C:/Users/murad/Desktop/videoHash"
-dirs = os.listdir( path )
+dirs = os.listdir()
 db_exists = False
 
 for file in dirs:
@@ -25,7 +24,7 @@ if not db_exists:
     cur.execute('''CREATE TABLE hashes(
         hash PRIMARY KEY
     );''')
-    cur.execute('''CREATE TABLE videos( 
+    cur.execute('''CREATE TABLE media( 
         uuid PRIMARY KEY, 
         hash UNIQUE, 
         path UNIQUE,
