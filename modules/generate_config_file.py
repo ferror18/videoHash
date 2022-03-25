@@ -43,7 +43,6 @@ origin_path='{finalConf[0]}'
 destination_path='{finalConf[1]}'
 collision_path='{finalConf[2]}'
 # Mode either 'episodes_same_folder' or 'photos_oredered_by_month'
-mode='{finalConf[3]}'
-    ''')
+mode='{finalConf[3]}' ''')
     file.close()
 

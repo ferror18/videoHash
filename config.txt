@@ -1,7 +1,6 @@
 
-origin_path='a'
-destination_path='a'
-collision_path='a'
+origin_path='b'
+destination_path='b'
+collision_path='b'
 # Mode either 'episodes_same_folder' or 'photos_oredered_by_month'
-mode='a'
-    
+mode='b' 
