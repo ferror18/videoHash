@@ -33,7 +33,7 @@ def generate_map(path):
             #Generate map
             id = str(uuid4())
             if id not in fileMap:
-                fileMap[id] = {'id':id,'path':item, 'ext':extension}
+                fileMap[id] = {'id':id,'path':item, 'ext':extension, 'fileName':os.path.basename(item)}
     os.chdir(original_wd)
     return fileMap
 
