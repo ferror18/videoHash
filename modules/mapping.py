@@ -1,5 +1,4 @@
 import os
-from pickletools import read_uint1
 from pprint import pprint
 from uuid import uuid4
 
@@ -7,11 +6,12 @@ def generate_map(path):
     original_wd = os.getcwd()
     os.chdir(path)
     fileMap = {}
-    fileExts = {}
+    fileExtensions = {}
     dir = os.listdir(path)
     ignore = {
         'Thumbs.db':1
     }
+
 
     for item in dir:
         if item in ignore:
@@ -24,16 +24,21 @@ def generate_map(path):
             fileMap = fileMap | generate_map(item)
         else:
             # Track extension names
-            extension = item.split('.')[-1]
-            if extension not in fileExts:
-                fileExts[extension] = 1
+            extension = os.path.splitext(item)[1][1:]
+            if extension not in fileExtensions:
+                fileExtensions[extension] = 1
             else:
-                fileExts[extension]+=1
+                fileExtensions[extension]+=1
 
             #Generate map
             id = str(uuid4())
             if id not in fileMap:
-                fileMap[id] = {'id':id,'path':item, 'ext':extension, 'fileName':os.path.basename(item)}
+                fileMap[id] = {
+                    'id':id,
+                    'path':item, 
+                    'ext':extension, 
+                    'fileName':os.path.basename(item)
+                    }
     os.chdir(original_wd)
     return fileMap
 
