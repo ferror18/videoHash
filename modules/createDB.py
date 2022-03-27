@@ -33,5 +33,5 @@ if not db_exists:
     print('TABLE SCHEMA ==> videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)')
     con.close()
 else:
-    print('Db already exists')
+    print('Database detected')
     pass
