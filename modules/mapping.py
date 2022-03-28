@@ -1,6 +1,7 @@
 import os
 from pprint import pprint
 from uuid import uuid4
+from modules.creation_time import get_creation_time
 
 def generate_map(path):
     original_wd = os.getcwd()
@@ -32,12 +33,15 @@ def generate_map(path):
 
             #Generate map
             id = str(uuid4())
+            creation_string = get_creation_time(item)
             if id not in fileMap:
                 fileMap[id] = {
                     'id':id,
                     'path':item, 
                     'ext':extension, 
-                    'fileName':os.path.basename(item)
+                    'fileName':os.path.basename(item),
+                    'creation_date' : creation_string,
+                    'year': creation_string[:4]
                     }
     os.chdir(original_wd)
     return fileMap

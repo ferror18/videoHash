@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from modules.readConfig import readConfig
+# from readConfig import readConfig
 from pprint import pprint
 _,_,_,_, database = readConfig()
 
@@ -11,15 +12,18 @@ cur = con.cursor()
 
 def insertOne(workingObj):
     cur.execute(f'''
-    INSERT INTO media (id,hash,path,creation_date,year,fileName,ext) values(?,?,?,?,?,?,?);''', (
+    INSERT INTO media (id,hash,path,creation_date,year,fileName,ext,finalPath,episode) values(?,?,?,?,?,?,?,?,?);''', (
         workingObj['id'], 
         workingObj['hash'], 
         workingObj['path'],
         workingObj['creation_date'],
         workingObj['year'],
         workingObj['fileName'],
-        workingObj['ext'])
-        )
+        workingObj['ext'],
+        workingObj['finalPath'],
+        workingObj['episode']
+    ))
+
 
 def insertMany():
     pass
@@ -28,18 +32,38 @@ def getAll():
     cur.execute('select * from media')
     return cur.fetchall()
 
+def closeDB():
+    con.commit()
+    con.close()
 
-# x = {'creation_date': '2022-03-22-18:24:14',
+
+# x = {
+#  'id': '17f44a14-3511-49bd-971b-a481e43c6d11',
+#  'hash': '0xefefeeeeae800000',
+#  'path': 'C:\\Users\\murad\\Desktop\\videoHash\\destination\\2021\\[S2021E1]17f44a14-3511-49bd-971b-a481e43c6d11.mp4',
+#  'creation_date': '2021-03-11-14:49:14',
+#  'year': '2021',
+#  'fileName': '[S2021E1]17f44a14-3511-49bd-971b-a481e43c6d11.mp4',
 #  'ext': 'mp4',
-#  'fileName': '[S2022E4]527ecb61-3ac8-4835-b2e2-f8d0fd88ae8f.mp4',
-#  'hash': '0xffffe000fff80000',
-#  'id': '9960fb49-6ead-444a-b146-4a6209a2a308',
-#  'new_name': '[S2022E4]9960fb49-6ead-444a-b146-4a6209a2a308.mp4',
-#  'new_path': 'C:\\Users\\murad\\Desktop\\videoHash\\destination\\2022\\[S2022E4]9960fb49-6ead-444a-b146-4a6209a2a308.mp4',      
-#  'path': 'C:\\Users\\murad\\Desktop\\videoHash\\data\\[S2022E4]527ecb61-3ac8-4835-b2e2-f8d0fd88ae8f.mp4',
-#  'year': '2022'}
+#  'episode': 1,
+#  'finalPath': 'C:\\Users\\murad\\Desktop\\videoHash\\destination\\2021\\[S2021E1]17f44a14-3511-49bd-971b-a481e43c6d11.mp4',      
+#  }
+
+# y = {
+#  'id': 'ebfec8c6-930a-4651-8369-bee47277f509',
+#  'hash': '0xe1d1d1c3f7e1c580',
+#  'path': 'C:\\Users\\murad\\Desktop\\videoHash\\destination\\2021\\[S2021E2]ebfec8c6-930a-4651-8369-bee47277f509.mp4',
+#  'creation_date': '2022-03-22-18:24:14',
+#  'year': '2022',
+#  'fileName': '[S2021E2]ebfec8c6-930a-4651-8369-bee47277f509.mp4',
+#  'ext': 'mp4',
+#  'episode': 2,
+#  'finalPath': 'C:\\Users\\murad\\Desktop\\videoHash\\destination\\2021\\[S2021E2]ebfec8c6-930a-4651-8369-bee47277f509.mp4',      
+#  }
 
 # insertOne(x)
+# insertOne(y)
+
 # myrows = getAll()
 # fileMap = {}
 # for row in myrows:
