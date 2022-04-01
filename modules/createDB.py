@@ -32,6 +32,7 @@ def createDB():
             path text UNIQUE,
             creation_date text,
             year text,
+            month text,
             fileName text,
             ext text,
             finalPath text,

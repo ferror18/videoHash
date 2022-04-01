@@ -12,21 +12,18 @@ cur = con.cursor()
 
 def insertOne(workingObj):
     cur.execute(f'''
-    INSERT INTO media (id,hash,path,creation_date,year,fileName,ext,finalPath,episode) values(?,?,?,?,?,?,?,?,?);''', (
+    INSERT INTO media (id,hash,path,creation_date,year, month, fileName,ext,finalPath,episode) values(?,?,?,?,?,?,?,?,?,?);''', (
         workingObj['id'], 
         workingObj['hash'], 
         workingObj['path'],
         workingObj['creation_date'],
         workingObj['year'],
+        workingObj['month'],
         workingObj['fileName'],
         workingObj['ext'],
         workingObj['finalPath'],
         workingObj['episode']
     ))
-
-
-def insertMany():
-    pass
 
 def getAll():
     cur.execute('select * from media')

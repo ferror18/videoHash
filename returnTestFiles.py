@@ -4,29 +4,22 @@ from modules.createDB import createDB
 from modules.readConfig import readConfig
 from modules.clear_console import clearConsole
 origin_path,destination_path,collision_path,mode,database = readConfig()
-
+ignoreList = ['Thumbs.db']
 def returnFiles(path):
     original_wd = os.getcwd()
     os.chdir(path)
     files = os.listdir()
     for i in files:
-        # print('i: ',i)
-        currentPath = os.path.abspath(i)
-        if i == 'Thumbs.db':
-            os.remove(i)
+        currentPath = os.path.abspath(i) #Get the path of the current file
+        if i in ignoreList: #Skip it if it is in the ignore list
             continue
-        if os.path.isdir(i):
-            # print('Folder : ', i)
-            # print(currentPath)
+        if os.path.isdir(i): #If it is a dir call this func on it
             returnFiles(currentPath)
-        else:
+        else:                                   #If none of the above then move file back to origin_path
             newPath = os.path.join(origin_path,i)
-            # print(currentPath, '\n',newPath)
             os.rename(currentPath, newPath)
-    
+    print('Test files returned to data folder')
     os.chdir(original_wd)
-
-
 
 def createCollison(file):
     copyPath = file[:-4] + ' - Copy.mp4'
@@ -37,21 +30,22 @@ while True:
     print('''
     a) Return files
     b) Create collision file
-    e) Reset database
-    c) Exit
+    c) Reset database
+    x) Exit
     ''')
     inp = input()
     clearConsole()
     if inp == 'a':
         returnFiles(destination_path)
+        
     elif inp == 'b':
         # print(os.listdir('data'))
         collisionFile = os.path.join(os.getcwd(),'data',os.listdir('data')[2])
         createCollison(collisionFile)
-    elif inp == "e":
+    elif inp == "c":
         os.remove('vh.db')
         createDB()
-    elif inp == 'c':
+    elif inp == 'x':
         break
     else:
         continue

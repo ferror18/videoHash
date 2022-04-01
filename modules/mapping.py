@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 from uuid import uuid4
 from modules.creation_time import get_creation_time
 
@@ -41,7 +40,8 @@ def generate_map(path):
                     'ext':extension, 
                     'fileName':os.path.basename(item),
                     'creation_date' : creation_string,
-                    'year': creation_string[:4]
+                    'year': creation_string[0:4],
+                    'month': creation_string[5:7]
                     }
     os.chdir(original_wd)
     return fileMap
