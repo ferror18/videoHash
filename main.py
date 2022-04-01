@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import os
 from pprint import pprint
-from modules.createDB import createDB
 from modules.video_hash import video_hash 
 from modules.photo_hash import photo_hash 
 from modules.generate_config_file import generate_config_file 
@@ -14,7 +13,6 @@ from modules.databaseDriver import closeDB, getAll, insertOne
 clearConsole()
 vidExts = ['mp4', 'mkv', 'mov', 'webm', 'avi']
 photoExts = ['jpg', 'png', 'tiff', 'pdf', 'raw']
-# config = {}
 hashTrk = {}
 yearTkr = {}
 # run tests
@@ -26,7 +24,6 @@ databaseFiles = {}
 for row in getAll():
     databaseFiles[row['id']] = dict(row)
 
-
 while True:
 
     print('''
@@ -37,7 +34,7 @@ while True:
     c) Generate config file
     x) exit
     ''')
-    inp = input("")
+    inp = input()
     clearConsole()
     
     if inp == "x":
