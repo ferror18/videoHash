@@ -4,3 +4,5 @@ data
 config.txt
 destination
 collisions
+modules/__pycache__/*
+*.pyc
