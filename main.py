@@ -2,6 +2,7 @@
 import os
 from pprint import pprint
 from modules.collisionOrganizer import organizeCollisions
+from modules.createDB import createDB
 from modules.folderStructure import generateFolderStructure
 from modules.nameGenerator import nameGenerator
 from modules.video_hash import video_hash 
@@ -10,7 +11,7 @@ from generate_config_file import generate_config_file
 from modules.clear_console import clearConsole
 from modules.mapping import generate_map
 from modules.readConfig import readConfig
-from modules.databaseDriver import closeDB, getAll, insertOne
+from modules.databaseDriver import closeDB, deleteAll, getAll, insertOne, openDB
 
 #State
 clearConsole()
@@ -22,11 +23,41 @@ yearTkr = {}
 origin_path,destination_path,collision_path,database,mode = readConfig()
 Unresolved_Collisions = False if len(os.listdir(collision_path)) == 0 else True
 # Map files
-fileMap = generate_map(origin_path, vidExts, photoExts)
+num = 2
 databaseFiles = {}
+dropDatabase = False
+# print('getall() :')
+# for row in getAll():
+#     print(f"ID: {row['id']} - config mode: {mode} - file mode: {row['mode']}")
 for row in getAll():
+    if row['mode'] != mode and row != None:
+        print(f"File: {row['fileName']} had mode {row['mode']} current mode is {mode}")
+        dropDatabase = True
     databaseFiles[row['id']] = dict(row)
+filenames = os.listdir(origin_path)
+filenames = list(filter(lambda j: not os.path.isdir(os.path.join(origin_path,j)), filenames)) #Removes all directories
 
+if dropDatabase:
+    for key in databaseFiles:
+        workingObj = databaseFiles[key]
+        curPath = workingObj['path']
+        newFileName = workingObj['fileName']
+        if newFileName in filenames:
+            print('reapeated name')
+            newFileName = workingObj['fileName'].split('.')
+            newFileName = newFileName[0] + f' ({num}).' + newFileName[1]
+            num+=1
+            newPath = os.path.join(origin_path, newFileName)
+        else:
+            newPath = os.path.join(origin_path, newFileName)
+        os.rename(curPath, newPath)
+
+    deleteAll()
+    databaseFiles = {}
+    # print('getall() :')
+    # for row in getAll():
+    #     print(f"ID: {row['id']} - config mode: {mode} - file mode: {row['mode']}")
+fileMap = generate_map(origin_path, vidExts, photoExts)
 while True:
 
     print('''
@@ -126,8 +157,9 @@ while True:
             
             generateFolderStructure(destination_path,yearTkr,fileMap,insertOne)
 
-            for i in getAll():
-                pprint(dict(i))
+            if False:
+                for i in getAll():
+                    pprint(dict(i))
             
             break 
         

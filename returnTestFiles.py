@@ -18,7 +18,6 @@ def returnFiles(path):
         else:                                   #If none of the above then move file back to origin_path
             newPath = os.path.join(origin_path,i)
             os.rename(currentPath, newPath)
-    print('Test files returned to data folder')
     os.chdir(original_wd)
 
 def createCollison(file):
@@ -37,6 +36,7 @@ while True:
     clearConsole()
     if inp == 'a':
         returnFiles(destination_path)
+        print('Test files returned to data folder')
         
     elif inp == 'b':
         # print(os.listdir('data'))

@@ -13,6 +13,9 @@ def generate_config_file():
         clearConsole()
         if cont == 'b':
             return None
+        else:
+            os.remove('config.txt')
+            generate_config_file()
     else:
         finalConf=[]
 
