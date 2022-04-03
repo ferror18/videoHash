@@ -3,7 +3,7 @@ import os
 from modules.readConfig import readConfig
 # from readConfig import readConfig
 from pprint import pprint
-_,_,_,_, database = readConfig()
+_,_,_,database,_ = readConfig()
 
 
 con = sqlite3.connect(database)
@@ -12,7 +12,7 @@ cur = con.cursor()
 
 def insertOne(workingObj):
     cur.execute(f'''
-    INSERT INTO media (id,hash,path,creation_date,year, month, fileName,ext,finalPath,episode) values(?,?,?,?,?,?,?,?,?,?);''', (
+    INSERT INTO media (id,hash,path,creation_date,year, month, fileName,ext,finalPath,episode,mode) values(?,?,?,?,?,?,?,?,?,?,?);''', (
         workingObj['id'], 
         workingObj['hash'], 
         workingObj['path'],
@@ -22,7 +22,8 @@ def insertOne(workingObj):
         workingObj['fileName'],
         workingObj['ext'],
         workingObj['finalPath'],
-        workingObj['episode']
+        workingObj['episode'],
+        workingObj['mode']
     ))
 
 def getAll():

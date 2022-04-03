@@ -7,7 +7,7 @@ from modules.readConfig import readConfig
 
 def createDB():
     dirs = os.listdir()
-    _,_,_,_, database = readConfig()
+    _,_,_,database,_ = readConfig()
     db_exists = False
     for file in dirs:
         if file == database:
@@ -36,7 +36,8 @@ def createDB():
             fileName text,
             ext text,
             finalPath text,
-            episode integer
+            episode integer,
+            mode text
             ) WITHOUT ROWID;''')
         con.commit()
         # print('TABLE SCHEMA ==> videos( hash PRIMARY KEY, name UNIQUE, path UNIQUE)')

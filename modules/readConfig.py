@@ -12,11 +12,11 @@ def readConfig(fileName='config.txt'):
         'origin_path': 0,
         'destination_path':1,
         'collision_path':2,
-        'mode':3,
-        'database':4
+        'database':3,
+        'mode':4
     }
     for i in conFile:
         result[myMap[i[0]]] = i[1]
     return result
     # origin_path,destination_path,collision_path,mode,database = readConfig()
-# readConfig('C:/Users/murad/Desktop/videoHash/config.txt')
+# print(readConfig('C:/Users/murad/Desktop/videoHash/config.txt'))

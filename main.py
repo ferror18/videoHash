@@ -2,9 +2,11 @@
 import os
 from pprint import pprint
 from modules.collisionOrganizer import organizeCollisions
+from modules.folderStructure import generateFolderStructure
+from modules.nameGenerator import nameGenerator
 from modules.video_hash import video_hash 
 from modules.photo_hash import photo_hash 
-from modules.generate_config_file import generate_config_file 
+from generate_config_file import generate_config_file 
 from modules.clear_console import clearConsole
 from modules.mapping import generate_map
 from modules.readConfig import readConfig
@@ -13,14 +15,14 @@ from modules.databaseDriver import closeDB, getAll, insertOne
 #State
 clearConsole()
 vidExts = ['mp4', 'mkv', 'mov', 'webm', 'avi']
-photoExts = ['jpg', 'png', 'tiff', 'pdf', 'raw']
+photoExts = ['jpg', 'png', 'tiff', 'pdf', 'raw', 'webp']
 hashTrk = {}
 yearTkr = {}
 # run tests
-origin_path,destination_path,collision_path,mode,database = readConfig()
+origin_path,destination_path,collision_path,database,mode = readConfig()
 Unresolved_Collisions = False if len(os.listdir(collision_path)) == 0 else True
 # Map files
-fileMap = generate_map(origin_path)
+fileMap = generate_map(origin_path, vidExts, photoExts)
 databaseFiles = {}
 for row in getAll():
     databaseFiles[row['id']] = dict(row)
@@ -83,12 +85,16 @@ while True:
             hashTrk[workObj['hash']] = [workObj]
             print(f"Database - File: {workObj['fileName']} Hash: {workObj['hash']}")
         pprint('--------------------------------End Database ------------------------------')
-        pprint('------------------------------- Start -------------------------------')
+        pprint('------------------------------- Start Files -------------------------------')
         #Start cheking new file hashes
         for key in fileMap:
             workObj = fileMap[key]
+            workObj['mode'] = mode
             #File Extension
             ext = workObj['ext']
+            # if ext not in vidExts or ext not in photoExts:
+                
+            #     os.rename(workObj['path'], os.path.join(destination_path, 'unknownExtension', workObj['fileName']))
             isVid = True if ext in vidExts else False
 
             #Hash
@@ -107,140 +113,23 @@ while True:
             else:
                 hashTrk[hs] = [fileMap[key]]
 
-        pprint('-------------------------------- Files -------------------------------')
-
-        if mode == 'episodes_by_year':
+        pprint('-------------------------------- End Files -------------------------------')
             
-            #Rename and Move Files
-            if Unresolved_Collisions:
-                organizeCollisions(hashTrk, collision_path)
-                continue
-            else:
-                print('\n\n\t Loading database data')
-
-                #Year and episode number
-                for key in databaseFiles:
-                    workObj = databaseFiles[key]
-                    #Episode number
-                    year = workObj['year']
-                    if year not in yearTkr:
-                        episode = 1
-                        yearTkr[year] = 1
-                    else:
-                        yearTkr[year]+=1
-
-                print('\n\n\t Orgainizing by year')
-                for key in fileMap:
-                    workObj = fileMap[key]
-                    #Episode number
-                    year = workObj['year']
-                    if year not in yearTkr:
-                        episode = 1
-                        yearTkr[year] = 1
-                    else:
-                        yearTkr[year]+=1
-                    episode = yearTkr[year]
-                    workObj['episode'] = episode
-                    workObj['new_name'] = f"[S{year}E{episode}]{key}.{ext}"
-                
-
-                #Creating File Structure
-                print('\n\n\t Creating per year Folder Structure')
-                existingDirs = {}
-                dirs = os.listdir(destination_path) #List all files in destination path
-                dirs = list(filter(lambda j: os.path.isdir(os.path.join(destination_path,j)), dirs)) #Removes all non directories
-                #Add existing directories
-
-                for x in dirs:
-                    existingDirs[x] = 1
-                # Create remaining directories
-                for i in yearTkr:
-                    if i not in existingDirs:
-                        os.mkdir(os.path.join(destination_path,i))
-                #Moving files around
-                print('\n\n\t Moving files to respective folders')
-                for key in fileMap:
-                    workObj = fileMap[key]
-                    workObj['finalPath'] = os.path.join(destination_path, workObj['year'], workObj['new_name'])
-                    os.rename(workObj['path'], workObj['finalPath'])
-                    #Update State
-                    workObj['path'] = workObj['finalPath']
-                    workObj['fileName'] = workObj['new_name']
-                    del workObj['new_name']
-                    # print(workObj)
-                #Updating database
-                    insertOne(workObj)
-                print('\n\n\t Updating database')
-                print('\n\n\t Collection Sorted Succesfully')
-                break 
-
-        elif mode == 'photos_oredered_by_month':
-            
-            #Rename and Move Files
-            if Unresolved_Collisions:
-                organizeCollisions(hashTrk, collision_path)
-                continue
-            else:
-                print('\t Loading database data')
-
-                #Year and episode number
-                for key in databaseFiles:
-                    workObj = databaseFiles[key]
-                    #Episode number
-                    year = workObj['year']
-                    if year not in yearTkr:
-                        episode = 1
-                        yearTkr[year] = 1
-                    else:
-                        yearTkr[year]+=1
-
-                print('\t Orgainizing by year')
-                for key in fileMap:
-                    workObj = fileMap[key]
-                    #Episode number
-                    year = workObj['year']
-                    if year not in yearTkr:
-                        episode = 1
-                        yearTkr[year] = 1
-                    else:
-                        yearTkr[year]+=1
-                    episode = yearTkr[year]
-                    workObj['episode'] = episode
-                    workObj['new_name'] = f"[S{year}E{episode}]{key}.{ext}"
-                
-
-                #Creating File Structure
-                print('\t Creating per year Folder Structure')
-                existingDirs = {}
-                dirs = os.listdir(destination_path) #List all files in destination path
-                dirs = list(filter(lambda j: os.path.isdir(os.path.join(destination_path,j)), dirs)) #Filters all non directories
-                #Add existing directories
-
-                for x in dirs:
-                    existingDirs[x] = 1
-                # Create remaining directories
-                for i in yearTkr:
-                    if i not in existingDirs:
-                        os.mkdir(os.path.join(destination_path,i))
-                #Moving files around
-                print('\t Moving files to respective folders')
-                for key in fileMap:
-                    workObj = fileMap[key]
-                    workObj['finalPath'] = os.path.join(destination_path, workObj['year'], workObj['new_name'])
-                    os.rename(workObj['path'], workObj['finalPath'])
-                    #Update State
-                    workObj['path'] = workObj['finalPath']
-                    workObj['fileName'] = workObj['new_name']
-                    del workObj['new_name']
-                    # print(workObj)
-                #Updating database
-                    insertOne(workObj)
-                print('\t Updating database')
-                print('\n\n\t Collection Sorted Succesfully')
-                break 
-  
+        #Rename and Move Files
+        if Unresolved_Collisions:
+            organizeCollisions(hashTrk, collision_path)
+            continue
         else:
-            print('Unknown mode')
+            print('\n\n\t Loading database data')
+
+            nameGenerator(fileMap, databaseFiles, yearTkr)
+            
+            generateFolderStructure(destination_path,yearTkr,fileMap,insertOne)
+
+            for i in getAll():
+                pprint(dict(i))
+            
+            break 
         
     else:
         continue

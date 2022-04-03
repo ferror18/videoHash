@@ -3,7 +3,7 @@ from pprint import pprint
 from modules.createDB import createDB
 from modules.readConfig import readConfig
 from modules.clear_console import clearConsole
-origin_path,destination_path,collision_path,mode,database = readConfig()
+origin_path,destination_path,collision_path,database,mode = readConfig()
 ignoreList = ['Thumbs.db']
 def returnFiles(path):
     original_wd = os.getcwd()
@@ -43,7 +43,7 @@ while True:
         collisionFile = os.path.join(os.getcwd(),'data',os.listdir('data')[2])
         createCollison(collisionFile)
     elif inp == "c":
-        os.remove('vh.db')
+        os.remove(database)
         createDB()
     elif inp == 'x':
         break

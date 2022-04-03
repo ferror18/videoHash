@@ -2,33 +2,33 @@ import os
 from uuid import uuid4
 from modules.creation_time import get_creation_time
 
-def generate_map(path):
+def generate_map(path, vidExts, photoExts):
     original_wd = os.getcwd()
     os.chdir(path)
     fileMap = {}
-    fileExtensions = {}
+    fileExtensions = vidExts + photoExts
     dir = os.listdir(path)
-    ignore = {
-        'Thumbs.db':1
-    }
+    # ignore = {
+    #     'Thumbs.db':1
+    # }
 
 
     for item in dir:
-        if item in ignore:
-            print(f'item ignored: {item}')
-            continue
+        # if item in ignore:
+        #     # print(f'item ignored: {item}')
+        #     continue
+
 
         item = os.path.abspath(item)
         # print(item, os.path.isdir(item)) debug print
         if os.path.isdir(item):
-            fileMap = fileMap | generate_map(item)
+            fileMap = fileMap | generate_map(item, vidExts, photoExts)
+        # elif 
         else:
             # Track extension names
             extension = os.path.splitext(item)[1][1:]
             if extension not in fileExtensions:
-                fileExtensions[extension] = 1
-            else:
-                fileExtensions[extension]+=1
+                continue
 
             #Generate map
             id = str(uuid4())
