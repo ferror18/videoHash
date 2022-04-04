@@ -1,6 +1,6 @@
 import os,shutil
 from pprint import pprint
-from modules.createDB import createDB
+from createDB import createDB
 from modules.readConfig import readConfig
 from modules.clear_console import clearConsole
 origin_path,destination_path,collision_path,database,mode = readConfig()

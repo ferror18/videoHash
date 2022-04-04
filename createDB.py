@@ -1,11 +1,9 @@
 import sqlite3
 import os
 from modules.readConfig import readConfig
-# from readConfig import readConfig
-# Open a file
-
 
 def createDB():
+
     dirs = os.listdir()
     _,_,_,database,_ = readConfig()
     db_exists = False

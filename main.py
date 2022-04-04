@@ -2,7 +2,6 @@
 import os
 from pprint import pprint
 from modules.collisionOrganizer import organizeCollisions
-from modules.createDB import createDB
 from modules.folderStructure import generateFolderStructure
 from modules.nameGenerator import nameGenerator
 from modules.video_hash import video_hash 
@@ -44,13 +43,19 @@ if dropDatabase:
         newFileName = workingObj['fileName']
         if newFileName in filenames:
             print('reapeated name')
+            curPath = os.path.join(origin_path, newFileName)
             newFileName = workingObj['fileName'].split('.')
             newFileName = newFileName[0] + f' ({num}).' + newFileName[1]
             num+=1
             newPath = os.path.join(origin_path, newFileName)
+            os.rename(curPath, newPath)
+            curPath = curPath = workingObj['path']
+            newFileName = workingObj['fileName']
+            newPath = os.path.join(origin_path, newFileName)
+            os.rename(curPath, newPath)
         else:
             newPath = os.path.join(origin_path, newFileName)
-        os.rename(curPath, newPath)
+            os.rename(curPath, newPath)
 
     deleteAll()
     databaseFiles = {}
