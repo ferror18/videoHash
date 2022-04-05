@@ -158,9 +158,9 @@ while True:
         else:
             print('\n\n\t Loading database data')
 
-            nameGenerator(fileMap, databaseFiles, yearTkr)
+            nameGenerator(fileMap, databaseFiles, yearTkr, mode)
             
-            generateFolderStructure(destination_path,yearTkr,fileMap,insertOne)
+            generateFolderStructure(destination_path,yearTkr,fileMap,insertOne, mode)
 
             if False:
                 for i in getAll():
