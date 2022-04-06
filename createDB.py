@@ -5,7 +5,7 @@ from modules.readConfig import readConfig
 def createDB():
 
     dirs = os.listdir()
-    _,_,_,database,_ = readConfig()
+    _,_,_,database,_,_,_ = readConfig()
     db_exists = False
     for file in dirs:
         if file == database:
@@ -20,10 +20,6 @@ def createDB():
 
         con = sqlite3.connect(database)
         cur = con.cursor()
-        # cur.execute('PRAGMA foreign_keys = ON;')
-        # cur.execute('''CREATE TABLE hashes(
-        #     hash PRIMARY KEY
-        # );''')
         cur.execute('''CREATE TABLE IF NOT EXISTS media (
             id text PRIMARY KEY, 
             hash text UNIQUE, 

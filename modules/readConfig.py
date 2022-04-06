@@ -13,7 +13,9 @@ def readConfig(fileName='config.txt'):
         'destination_path':1,
         'collision_path':2,
         'database':3,
-        'mode':4
+        'mode':4,
+        'extraVidExt':5,
+        'extraPhotoExt':6
     }
     for i in conFile:
         result[myMap[i[0]]] = i[1]

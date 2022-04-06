@@ -1,4 +1,7 @@
 #!/usr/bin/python
+from preChecks import preCheckPassed
+print(preCheckPassed())
+exit()
 import os
 from pprint import pprint
 from modules.collisionOrganizer import organizeCollisions
@@ -10,24 +13,26 @@ from generate_config_file import generate_config_file
 from modules.clear_console import clearConsole
 from modules.mapping import generate_map
 from modules.readConfig import readConfig
-from modules.databaseDriver import closeDB, deleteAll, getAll, insertOne, openDB
+from modules.databaseDriver import closeDB, deleteAll, getAll, insertOne
+
 
 #State
 clearConsole()
-vidExts = ['mp4', 'mkv', 'mov', 'webm', 'avi']
+origin_path,destination_path,collision_path,database,mode,extraVidExt, extraPhotoExt = readConfig()
+vidExts = ['mp4', 'mkv', 'mov', 'webm', 'avi'] 
+vidExts = vidExts+extraVidExt.split(',') if extraVidExt != '0' else vidExts
 photoExts = ['jpg', 'png', 'tiff', 'pdf', 'raw', 'webp']
+photoExts = photoExts+extraPhotoExt.split(',') if extraPhotoExt != '0' else photoExts
+print(vidExts, photoExts)
 hashTrk = {}
 yearTkr = {}
 # run tests
-origin_path,destination_path,collision_path,database,mode = readConfig()
 Unresolved_Collisions = False if len(os.listdir(collision_path)) == 0 else True
 # Map files
 num = 2
 databaseFiles = {}
 dropDatabase = False
-# print('getall() :')
-# for row in getAll():
-#     print(f"ID: {row['id']} - config mode: {mode} - file mode: {row['mode']}")
+
 for row in getAll():
     if row['mode'] != mode and row != None:
         print(f"File: {row['fileName']} had mode {row['mode']} current mode is {mode}")
@@ -128,9 +133,6 @@ while True:
             workObj['mode'] = mode
             #File Extension
             ext = workObj['ext']
-            # if ext not in vidExts or ext not in photoExts:
-                
-            #     os.rename(workObj['path'], os.path.join(destination_path, 'unknownExtension', workObj['fileName']))
             isVid = True if ext in vidExts else False
 
             #Hash

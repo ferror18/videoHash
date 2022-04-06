@@ -30,6 +30,7 @@ def generate_config_file():
         inp = input()
         if inp == '':
             inp = os.path.join(os.getcwd(), 'destination')
+
         finalConf.append(inp)
         clearConsole()
 
@@ -70,6 +71,42 @@ def generate_config_file():
 
         finalConf.append(modeString)
 
+        print("Do you want to include any extra video file extensions? Already inluded ('mp4', 'mkv', 'mov', 'webm', 'avi')\n\ta)Yes\n\tb)No")
+        inp = input()
+        if inp == 'a':
+            while True:
+                print('Type it now:')
+                z = input()
+                print('Is ', z, 'correct?\n\ta)Yes\n\tb)No\n\tx)cancel')
+                inp = input()
+                if inp == 'a':
+                    finalConf.append(z)
+                    break
+                elif inp == 'x':
+                    finalConf.append(0)
+                    break
+        else:
+            finalConf.append(0)
+        clearConsole()
+
+        print("Do you want to include any extra photo file extensions? Already inluded ('jpg', 'png', 'tiff', 'pdf', 'raw', 'webp')\n\ta)Yes\n\tb)No")
+        inp = input()
+        if inp == 'a':
+            while True:
+                print('Type it now:')
+                z = input()
+                print('Is ', z, 'correct?\n\ta)Yes\n\tb)No\n\tx)cancel')
+                inp = input()
+                if inp == 'a':
+                    finalConf.append(z)
+                    break
+                elif inp == 'x':
+                    finalConf.append(0)
+                    break
+        else:
+            finalConf.append(0)
+        clearConsole()
+
 
         file = open('config.txt', 'w')
     #Keep files touchung this end other wise there willbe a space in the config file
@@ -83,7 +120,9 @@ database={finalConf[3]}
 # 3rd letter is about wheter to organize the files in yearly 'y' monthly 's' or a single 's' folder.
 # Example - 'ery' Will rename to a randon uuid with and episode in front in yearlyt folders.
 # Example - 'nks' Will keep original file name not add an episode number to the name and put the files in a single folder
-mode={finalConf[4]}''')
+mode={finalConf[4]}
+extraVidExt={finalConf[5]} 
+extraPhotoExt={finalConf[6]}''')
         file.close()
 
 # generate_config_file()

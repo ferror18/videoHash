@@ -1,18 +1,12 @@
 import sqlite3
-import os
 from modules.readConfig import readConfig
 # from readConfig import readConfig
-from pprint import pprint
-_,_,_,database,_ = readConfig()
+_,_,_,database,_,_,_ = readConfig()
 
 con = sqlite3.connect(database)
 con.row_factory = sqlite3.Row
 cur = con.cursor()
-def openDB():
-    con = sqlite3.connect(database)
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    return con, cur
+
 def insertOne(workingObj):
     return cur.execute(f'''
     INSERT INTO media (id,hash,path,creation_date,year, month, fileName,ext,finalPath,episode,mode) values(?,?,?,?,?,?,?,?,?,?,?);''', (

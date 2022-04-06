@@ -37,7 +37,6 @@ def nameGenerator(fileMap, databaseFiles, yearTkr, mode):
         workObj['episode'] = episode
         if checkIfEpisode(workObj['fileName']):
             workObj['fileName'] = workObj['fileName'][9:]
-            # print(workObj['fileName'])
         if mode[1] == 'r':
             workObj['new_name'] = f"[S{year}E{episode}]{key}.{ext}" if mode[0] == 'e' else f"{key}.{ext}"
         else:
