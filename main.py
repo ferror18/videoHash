@@ -1,7 +1,6 @@
 #!/usr/bin/python
 from preChecks import preCheckPassed
 print(preCheckPassed())
-exit()
 import os
 from pprint import pprint
 from modules.collisionOrganizer import organizeCollisions
@@ -23,7 +22,6 @@ vidExts = ['mp4', 'mkv', 'mov', 'webm', 'avi']
 vidExts = vidExts+extraVidExt.split(',') if extraVidExt != '0' else vidExts
 photoExts = ['jpg', 'png', 'tiff', 'pdf', 'raw', 'webp']
 photoExts = photoExts+extraPhotoExt.split(',') if extraPhotoExt != '0' else photoExts
-print(vidExts, photoExts)
 hashTrk = {}
 yearTkr = {}
 # run tests

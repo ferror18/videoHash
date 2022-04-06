@@ -1,4 +1,4 @@
-import os
+import os,sys
 from createDB import createDB
 from generate_config_file import generate_config_file
 from modules.clear_console import clearConsole
@@ -11,6 +11,7 @@ def preCheckPassed():
         pathsExist = True
         databaseExist = False
         databaseSchemaCorrect = True
+        ffmpegInstalled = True
 
         #Check config file is in CWD
         dirs = os.listdir()
@@ -158,5 +159,50 @@ def preCheckPassed():
                     exit()
                 else:
                     continue
-        if configExists and modeisValid and pathsExist and databaseExist and databaseSchemaCorrect:
+        ffmpegPath = 'C:\\Program Files\\ffmpeg\\bin'
+        ffmpegDirs = os.listdir(ffmpegPath)
+        ffmpegBinaries = ['ffmpeg.exe', 'ffplay.exe', 'ffprobe.exe']
+        for i in ffmpegBinaries:
+            # print(i)
+            if i not in ffmpegDirs:
+                ffmpegInstalled = False
+        if ffmpegInstalled == False:
+                clearConsole()
+                print(f"""
+
+
+                        ffmpeg is missing  please install it and add it to 'path':
+
+                        {ffmpegPath} : {ffmpegBinaries}
+                        
+                        Please installit in '{ffmpegPath}'
+
+                        x) Exit
+                """)
+                inp = input()
+                if inp == 'x':
+                    exit()
+                else:
+                    continue
+
+        
+        # ffmpegInstalled = False
+        envPath = os.getenv('path').split(';')
+        ffmpegInstalled = True if ffmpegPath in envPath else False
+        if ffmpegInstalled == False:
+                clearConsole()
+                print(f"""
+
+
+                        ffmpeg has not been added to environment variable 'path':
+
+                        x) Exit
+                """)
+                inp = input()
+                if inp == 'x':
+                    exit()
+                else:
+                    continue
+
+        if configExists and modeisValid and pathsExist and databaseExist and databaseSchemaCorrect and ffmpegInstalled:
             return 'Pre-Checks succesfull'
