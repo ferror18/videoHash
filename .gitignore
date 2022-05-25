@@ -8,5 +8,5 @@ modules/__pycache__/*
 __pycache__
 *.pyc
 build
-main.spec
+*.spec
 dist

@@ -3,7 +3,7 @@ from pprint import pprint
 from createDB import createDB
 from modules.readConfig import readConfig
 from modules.clear_console import clearConsole
-origin_path,destination_path,collision_path,database,mode = readConfig()
+origin_path,destination_path,_,database,_,_,_ = readConfig()
 ignoreList = ['Thumbs.db']
 def returnFiles(path):
     original_wd = os.getcwd()
