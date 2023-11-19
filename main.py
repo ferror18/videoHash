@@ -8,11 +8,9 @@ from modules.folderStructure import generateFolderStructure
 from modules.nameGenerator import nameGenerator
 from modules.video_hash import video_hash 
 from modules.photo_hash import photo_hash 
-from generate_config_file import generate_config_file 
 from modules.clear_console import clearConsole
 from modules.mapping import generate_map
 from modules.readConfig import readConfig
-from modules.databaseDriver import closeDB, deleteAll, getAll, insertOne
 from modules.mapHasher import mapHasher
 #State
 clearConsole()
@@ -47,7 +45,7 @@ if Unresolved_Collisions:
     forDeleteion = organizeCollisions(hashTrk, collision_path)
     for i in forDeleteion:
         fileMap.pop(i)
-print(f'Unique files {len(fileMap)}')
+print(f'Non Collisions {len(fileMap)}')
 
 nameGenerator(fileMap, yearTkr)
 pprint(yearTkr)

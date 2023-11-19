@@ -42,24 +42,24 @@ def createCollison(file):
     shutil.copy2(file, copyPath)
 
 
-while True:
-    print('''
-    a) Return files
-    b) Create collision file
-    x) Exit
-    ''')
-    inp = input()
-    clearConsole()
-    if inp == 'a':
-        returnFiles(destination_path)
-        returnColl(collision_path)
-        print('Test files returned to data folder')
+# while True:
+#     print('''
+#     a) Return files
+#     b) Create collision file
+#     x) Exit
+#     ''')
+#     inp = input()
+#     clearConsole()
+#     if inp == 'a':
+returnFiles(destination_path)
+returnColl(collision_path)
+print('Test files returned to data folder')
         
-    elif inp == 'b':
-        # print(os.listdir('data'))
-        collisionFile = os.path.join(os.getcwd(),'data',os.listdir('data')[2])
-        createCollison(collisionFile)
-    elif inp == 'x':
-        break
-    else:
-        continue
+#     elif inp == 'b':
+#         # print(os.listdir('data'))
+#         collisionFile = os.path.join(os.getcwd(),'data',os.listdir('data')[2])
+#         createCollison(collisionFile)
+#     elif inp == 'x':
+#         break
+#     else:
+#         continue
