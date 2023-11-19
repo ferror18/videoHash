@@ -1,6 +1,4 @@
 import os,shutil
-from pprint import pprint
-from createDB import createDB
 from modules.readConfig import readConfig
 from modules.clear_console import clearConsole
 origin_path,destination_path,collision_path,database,_,_,_ = readConfig()
@@ -48,8 +46,6 @@ while True:
     print('''
     a) Return files
     b) Create collision file
-    c) Reset database
-    d) Return collisons
     x) Exit
     ''')
     inp = input()
@@ -63,9 +59,6 @@ while True:
         # print(os.listdir('data'))
         collisionFile = os.path.join(os.getcwd(),'data',os.listdir('data')[2])
         createCollison(collisionFile)
-    elif inp == "c":
-        os.remove(database)
-        createDB()
     elif inp == 'x':
         break
     else:
