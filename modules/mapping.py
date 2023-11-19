@@ -8,15 +8,8 @@ def generate_map(path, vidExts, photoExts):
     fileMap = {}
     fileExtensions = vidExts + photoExts
     dir = os.listdir(path)
-    # ignore = {
-    #     'Thumbs.db':1
-    # }
-
 
     for item in dir:
-        # if item in ignore:
-        #     # print(f'item ignored: {item}')
-        #     continue
 
 
         item = os.path.abspath(item)

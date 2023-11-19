@@ -2,6 +2,7 @@ import os
 
 def organizeCollisions(allHashes, CollP):
     print('\n\n\t++ Please resolve collisions before continuing ++ ')
+    result = []
     for key in allHashes:
         collisionArray = allHashes[key]
         if len(collisionArray) == 1: # Loop trough all hashes but avoid the ones with out collition
@@ -15,3 +16,7 @@ def organizeCollisions(allHashes, CollP):
         for x in collisionArray:
             x['unsolved_collision_path'] = os.path.join(unsolved_collision_folder, x['fileName'])
             os.rename(x['path'], x['unsolved_collision_path'])
+            print('1 moved')
+            result.append(x['id'])
+    return result
+    

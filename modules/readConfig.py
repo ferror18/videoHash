@@ -22,3 +22,4 @@ def readConfig(fileName='config.txt'):
     return result
     # origin_path,destination_path,collision_path,mode,database = readConfig()
 # print(readConfig('C:/Users/murad/Desktop/videoHash/config.txt'))
+readConfig()
