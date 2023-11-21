@@ -1,6 +1,8 @@
 import os
 from uuid import uuid4
 from modules.creation_time import get_creation_time
+from modules import video_hash
+from modules import photo_hash
 
 def generate_map(path, vidExts, photoExts):
     original_wd = os.getcwd()
@@ -22,6 +24,10 @@ def generate_map(path, vidExts, photoExts):
             extension = os.path.splitext(item)[1][1:]
             if extension not in fileExtensions:
                 continue
+            isVid = True if extension in vidExts else False
+            isPho = True if extension in photoExts else False
+            if isVid and not isPho: hashof = video_hash
+            if isPho and not isVid: hashof = photo_hash
 
             #Generate map
             id = str(uuid4())
@@ -34,7 +40,8 @@ def generate_map(path, vidExts, photoExts):
                     'fileName':os.path.basename(item),
                     'creation_date' : creation_string,
                     'year': creation_string[0:4],
-                    'month': creation_string[5:7]
+                    'month': creation_string[5:7],
+                    'hashFunc': hashof
                     }
     os.chdir(original_wd)
     return fileMap
