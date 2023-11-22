@@ -1,5 +1,3 @@
-from pprint import pprint
-from sre_compile import isstring
 from PIL import Image
 import imagehash
 import numpy
@@ -11,7 +9,7 @@ def binary_array_to_hex(arr):
 	width = int(numpy.ceil(len(bit_string)/4))
 	return '{:0>{width}x}'.format(int(bit_string, 2), width=width)
 
-def photo_hash(path, type='p'):
+def photo_hash(key,path):
     types = {
         "a" : imagehash.average_hash,
         "d" : imagehash.dhash,
@@ -19,8 +17,8 @@ def photo_hash(path, type='p'):
         "p" : imagehash.phash
     }
     img = Image.open(path)
-    hs = types[type](img)
+    hs = types['p'](img)
     hs = binary_array_to_hex(hs.hash.flatten())
-    return '0x'+hs
+    return key,'0x'+hs
 
-# print(photo_hash('C:/Users/murad/Desktop/videoHash/data/art.jpg'))
+# print(photo_hash('C:/Users/murad/Desktop/videoHash/data/20201126_123457.jpg'))

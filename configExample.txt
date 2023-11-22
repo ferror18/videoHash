@@ -1,0 +1,13 @@
+origin_path=C:\Users\murad\Desktop\videoHash\data
+destination_path=C:\Users\murad\Desktop\videoHash\destination
+collision_path=C:\Users\murad\Desktop\videoHash\collisions
+database=vh.db
+# Mode is a string with 3 letters. Each letter refers to a difrent thing
+# 1st letter is about wheter or not name by episode 'e' for orginizing them 'n' for not
+# 2nd letter is about wheter to keep the original file name 'k' or replace it with it's uuid 'r'
+# 3rd letter is about wheter to organize the files in yearly 'y' monthly 's' or a single 's' folder.
+# Example - 'ery' Will rename to a randon uuid with and episode in front in yearlyt folders.
+# Example - 'nks' Will keep original file name not add an episode number to the name and put the files in a single folder
+mode=nrs
+extraVidExt=0 
+extraPhotoExt=0

@@ -7,8 +7,10 @@ results_a = []
 results_b = []
 results_c = []
 
-def make_calculation_one(number):
-    return math.sqrt(math.sqrt(number ** 20))
+def make_calculation_one(number,q=None):
+    x = math.sqrt(math.sqrt(number ** 20))
+    if q != None : q.put(x)
+    return x
 
 def make_calculation_two(numbers):
     for number in numbers:
@@ -20,7 +22,7 @@ def make_calculation_three(numbers):
 
 if __name__ == '__main__':
     
-    y = 1000000
+    y = 10000000
     print('Number',format(y,','))
     number_list = list(range(y))
 
@@ -33,7 +35,7 @@ if __name__ == '__main__':
     finalTime1 = end - start
     print(finalTime1)
 
-    seta1 =  []
+    seta1 =  results_a
     setb1 = []
     setc1 = []
     # print(seta1)
@@ -42,22 +44,18 @@ if __name__ == '__main__':
     newlst1 = number_list[:len(number_list)//2]
     newlst2 = number_list[len(number_list)//2:]
     # print(newlst1, newlst2)
-    q = mp.Queue()
-    def fun(lst,qe):
-        for i in lst:
-            qe.put(make_calculation_one(i))
-    p1 = mp.Process(target=fun, args=(newlst1,q,))
-    p2 = mp.Process(target=fun, args=(newlst2,q,))
-    # p2 = mp.Process(target=make_calculation_one, args=(number_list,q))
-    # p3 = mp.Process(target=make_calculation_three, args=(number_list,))
-    p1.start()
-    p2.start()
-    # p3.start()
-    # p1.join()
-    # p2.join()
-    # p3.join()
-    for i in q:
-        seta1.append(q.get())
+    # q = mp.Queue()
+    # p1 = [mp.Process(target=make_calculation_one, args=(i,q))for i in number_list]
+    # # p2 = mp.Process(target=make_calculation_one, args=(number_list,q))
+    # # p3 = mp.Process(target=make_calculation_three, args=(number_list,))
+    # for i in p1: i.start()
+    # # p2.start()
+    # # p3.start()
+    # for i in p1: i.join()
+    # # p2.join()
+    # # p3.join()
+    # for i in q:
+    #     seta1.append(q.get())
     end = time.time()
     finalTime2 = end - start
     print(finalTime2)
@@ -84,33 +82,17 @@ if __name__ == '__main__':
         return x
     
     
-
     start = time.time()
-    # listoflist = splitToSize(number_list)
-    # print(number_list)
-    # print(len(listoflist))
-    with concurrent.futures.ProcessPoolExecutor() as executor:
+    z = len(number_list)//10 # Most efficient 
 
-        # def send(lista):
-        #     f1 = executor.submit(make_calculation_one, lista)
-        #     f2 = executor.submit(make_calculation_two, lista)
-        #     f3 = executor.submit(make_calculation_three, lista)
-        # for _ in splitToSize(number_list):
-        #     # print(_,len(_))
-        #     send(_)
-        f1 = executor.submit(make_calculation_one, number_list)
-        # f2 = executor.submit(make_calculation_two, number_list)
-        # f3 = executor.submit(make_calculation_three, number_list)
-        
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        f1 = executor.map(make_calculation_one, number_list,chunksize=z)
+        seta3 = [_ for _ in f1]
+
     end = time.time()
     seta3 =  results_a
-    setb3 = results_b
-    setc3 = results_c
     finalTime3 = end - start
     print(finalTime3)
     print(seta1==seta2==seta3)
-    print(setb1==setb2==setb3)
-    print(setc1==setc2==setc3)
-    print(setc1,setc2,setc3)
     print(f"Improvement mehotd 2 {round(finalTime2/finalTime1*100, 2)-100}%")
     print(f"Improvement mehotd 3 {round(finalTime3/finalTime1*100, 2)-100}%")
